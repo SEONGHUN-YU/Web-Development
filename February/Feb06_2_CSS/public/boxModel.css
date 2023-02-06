@@ -1,0 +1,32 @@
+@charset "EUC-KR";
+
+body {
+	background-color: #00000033;
+}
+
+div {
+	/* 
+		css는 모든 DOM객체를 BoxModel로 관리함 
+		
+		margin 	: 외부여백
+		padding : 내부여백 
+			-left
+			-right
+			-top
+			-bottom
+			다 따로줄 수 있다
+		
+		border: 선색깔 선종류 선두께; 
+		선 종류
+			solid double
+			dashed dotted
+			inset outset
+			ridge groove
+	*/
+	margin: 20px;
+	border-left: orange solid 5px;
+	border-right: orange solid 5px;
+	padding: 10px;
+	width: 100px; /* %단위도 가능 */
+	height: 100px;
+}

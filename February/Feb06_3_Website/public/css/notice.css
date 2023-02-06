@@ -1,0 +1,32 @@
+@charset "EUC-KR";
+
+#noticeBBS {
+	width: 700px;
+	box-shadow: 3px 3px 3px balck;
+	/* td간의 간격 */
+	border-spacing: 0px;
+	/*  제목줄에 들어갈 거*/
+	background-color: #689F38;
+	color: white;
+}
+
+#noticeBBS td {
+	border-bottom: #EDE7F6 solid 2px;
+}
+
+#noticeBBS .dataTr {
+	/* 내용줄에 들어갈 거*/
+	background-color: white;
+	color: black;
+	height: 30px;
+	/* 마우스 포인터 */
+	cursor: pointer;
+}
+
+#noticeBBs .dataTr:hover {
+	background-color: #EDE7F6;
+}
+
+th {
+	height: 30px;
+}

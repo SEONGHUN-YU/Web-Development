@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1" width="300px" height="300px">
+		<tr>
+			<!-- <tr>행 -->
+			<!-- <td>열 -->
+			<td align="center">ㄱ</td>
+			<th>ㄴ</th>
+			<!-- <th> 가운데 정렬에 굵게 : 제목용 -->
+			<td align="right">ㄷ</td>
+		</tr>
+		<tr>
+			<td valign="top">ㄷ</td>
+			<td>ㄹ</td>
+			<td align="right" valign="bottom">ㅁ</td>
+		</tr>
+	</table>
+	<hr>
+	<table border="1" width="400px" height="200px">
+		<tr>
+			<td></td>
+			<td></td>
+			<td colspan="2"></td>
+			<!-- row방향으로 늘려서 2칸 차지해라(세로로 읽혀짐) -->
+		</tr>
+		<tr>
+			<td></td>
+			<td rowspan="2"></td>
+			<!-- column방향으로 늘려서 2칸 차지해라(가로로 읽혀짐) -->
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<hr>
+	<table border="1" width="500px" height="300px">
+		<tr>
+			<td colspan="2">1</td>
+			<td rowspan="2">3</td>
+		</tr>
+		<tr>
+			<td rowspan="2">4</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td colspan="2">8</td>
+		</tr>
+	</table>
+	
+	
+</body>
+</html>

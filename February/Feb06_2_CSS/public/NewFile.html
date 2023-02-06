@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!--  
+	CSS(Cascading Style Sheet)
+		웹사이트 디자인(HTML을 보조해주는 존재)
+		DOM객체에 디자인을 부여
+		
+		selector(선택자)
+		문법
+		selector {
+			속성명: 값;
+			속성명: 값;
+			...
+		}
+		
+		CSS selector : 다양한 분야에서 이용됨(웹크롤링 등)				
+		
+		기본형
+			태그명 - 그것들에 다 적용됨
+			#id - id가 그거인 것에 적용됨
+			.class - class가 그것인 것들에 적용됨
+		조합형(쌤이 부르는 별칭)
+			기본형, 기본형, ... - 여러개 선택
+			기본형 기본형 ... 	- 포함관계
+			기본형.class 		- 해당 적용 부분만
+		상태형
+			기본형:상태 - 그 녀석이 그 상태일 때만 적용되도록 하는 거
+-->
+<style type="text/css">
+div {
+	font-size: 50pt;
+}
+
+#aaa {
+	color: #ab302d;
+	font-size: 60pt;
+}
+
+.bbb {
+	background-color: yellow;
+}
+
+h2, h3 {
+	/* x y blur color */
+	text-shadow: 2px -2px 3px #43a047; /*x축 y축 블러량 색깔*/
+}
+
+div h2 {
+	font-family: "궁서";
+}
+
+h4.bbb {
+	text-decoration: underline;
+}
+
+.ccc {
+	color: red;
+}
+
+.ccc.bbb {
+	font-weight: 500;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover { /* hover - 마우스 올라간 동안  */
+	color: orange;
+}
+
+a:active { /* active - 누르는 동안 */
+	font-size: 5pt;
+}
+
+input:focus { /* focus - 글자치고 있을 때(?), input에만 적용가능 */
+	background-color: gray;
+}
+</style>
+</head>
+<body>
+	<input style="color: white;">
+	<!-- style="" 여기다가 바로 적용 가능 -->
+	<input>
+	<a href="https://soldesk.com">학원</a>
+	<h4 class="bbb ccc">ㅂㅂ2</h4>
+	<!-- bbb이기도 하고 ccc이기도 하다  -->
+	<div>
+		<h2>ㅎㅇ</h2>
+	</div>
+	<h2>ㅡㅡ</h2>
+	<h3>ㅠㅠ</h3>
+	<div id="aaa">ㅋㅋㅋ</div>
+	<!-- id="" 변수명 같은 느낌, 한 번만 쓰는 게 좋다 -->
+	<!-- id를 여러번 써도 구현에 문제는 없지만 interpreter언어이기에 가능한 버그(?) 같은 셈, 매우 안 좋음 -->
+	<div class="bbb">ㅎㅎㅎ</div>
+	<h1 class="bbb">ㅇㅇ</h1>
+</body>
+</html>

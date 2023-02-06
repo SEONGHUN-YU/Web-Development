@@ -1,0 +1,11 @@
+@charset "EUC-KR";
+
+.anEvent {
+	width: 800px;
+	height: 150px;
+	border: #673AB7 solid 3px;
+	/* 모서리 둥글게 깎기 */
+	border-radius: 20px;
+	/* shadow는 안쪽으로 넣는 것도 가능하다(내부 그림자) */
+	box-shadow: 0px 0px 20px #673AB7 inset;
+}

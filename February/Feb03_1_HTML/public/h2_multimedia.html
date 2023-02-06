@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<!--  
+	사이즈 조절
+		1. 그림 크기 조절은 안 하는 게 낫다(깨질 위험)
+		2. 한다해도 css에서
+		
+		- width에 단위 안 쓰면 px단위로, %쓰면 상대크기
+		- 가로 or 세로 둘 중에 하나만 조절하면
+			원본 비율 살려서 나머지 하나도 자동 조절해줌
+-->
+	<!-- 	<img alt="" src="backpack.jpg"> 
+		alt는 src가 찾을 수 없을 때 나올 것
+		사실상 안 씀, 빼자
+-->
+	<!-- 5버전 이전에는 img or img말고 나머지였음(전부 embed로 썼었다) -->
+	<!-- 
+		파일경로
+		- 절대경로
+			서울시 강남구 봉은사로 119 5층 3강의실
+		- 상대경로
+		 	옆강의실
+	-->
+	<img src="file:///C:/Users/sdedu/Desktop/websave/Feb03_1_HTML/public/imageHaha/backpack.jpg" width="10%" height="50%">
+	<img src="imageHaha/backpack.jpg" width="50%" height="50%">
+	<img src="http://192.168.0.152/what_is_this.png" width="50%" height="50%">
+	<hr>
+	<audio src="중국말.mp3" controls="controls"></audio>
+	<hr>
+	<video src="spring.mp4" controls="controls"></video>
+	<hr>
+	<embed src="Bluetooth.pdf">
+</body>
+</html>

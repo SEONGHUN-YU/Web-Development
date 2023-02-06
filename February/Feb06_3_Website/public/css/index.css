@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+@font-face {
+	/* 
+	CSS3에 추가된 웹폰트 기능 
+		주의사항
+		1) 저작권
+		2) CSS3에 추가되었다 -> IE에서 안 됨...
+		3) 폰트파일은 용량이 클 수밖에 없다 한글 글자가 너무 많아서
+		-> 서버/네트워크가 안 좋으면 글자가 잘 안 나옴...
+	=> 글자말고 그림작업 하렴(실전에선)
+	*/
+	font-family: "coconut";
+	src: url("DNFBitBitTTF.ttf");
+}
+
+#siteTitleArea {
+	/* 
+		좌표체계 설정 
+			absolute : html기준(스크롤 타고다님)
+			fixed : broswer기준(스크롤 해도 고정)
+	*/
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+}
+
+#siteTitleArea2 {
+	background-color: #FFFFFFCC;
+}
+
+#siteTitle {
+	width: 1000px;
+	height: 80px;
+	font-family: "coconut";
+	color: #689F38;
+	font-size: 30pt;
+	font-weight: 900;
+}
+
+#siteMenuArea {
+	border-top: #673AB7 solid 2px;
+	border-bottom: #673AB7 solid 2px;
+	background-color: #673AB7CC;
+}
+
+#siteMenu {
+	width: 1000px;
+	height: 35px;
+}
+
+#siteMenu a { /* tr td a인데 그냥 a로 써도 적용된다 */
+	text-decoration: none;
+	color: white;
+	font-family: "coconut";
+	margin-right: 20px;
+}
+
+#siteMenu a:hover {
+	color: yellow;
+}
+
+#siteMenu a:active {
+	color: red;
+}
+
+#siteContentArea {
+	/* 가운데 정렬 */
+	margin-left: auto;
+	margin-right: auto;
+	/* 640x800 -> 800x600 -> 1024x768 -> ... */
+	width: 1000px;
+	padding-top: 130px;
+}
+
+#homeImg {
+	/*  
+		img는 크기조절을 안 하는 게 맞음
+		딱 맞는 사이즈로 그림 작업이 되는 게 베스트
+		
+		어쩔 수 없이 조절하는 순간에
+		작은 사이즈를 늘리는 건 자제하자
+		100x100 -> 50x50 : 그래도 봐줄만 함
+		50x50 -> 100x100 : 계단현상...
+		
+		max-width: 700px;
+			700보다 큰 거 	: 700으로 받음
+			700보다 작은 거 : 원본 사이즈
+	*/
+	max-width: 1920px;
+	box-shadow: 3px 3px 5px black;
+}
