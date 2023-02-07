@@ -1,6 +1,7 @@
 @charset "EUC-KR";
 
 .anEvent {
+	margin-bottom: 20px;
 	width: 800px;
 	height: 150px;
 	border: #673AB7 solid 3px;
@@ -8,4 +9,16 @@
 	border-radius: 20px;
 	/* shadow는 안쪽으로 넣는 것도 가능하다(내부 그림자) */
 	box-shadow: 0px 0px 20px #673AB7 inset;
+}
+
+.anEvent img {
+	max-width: 70px;
+}
+
+.anEvent .imgTd {
+	width: 90px;
+}
+.anEvnet .writerTd{
+	color: #673AB7;
+	font-weight: 900;
 }

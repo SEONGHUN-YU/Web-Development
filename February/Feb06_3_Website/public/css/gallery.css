@@ -1,0 +1,12 @@
+@charset "EUC-KR";
+
+.aPhoto img {
+	max-width: 150px;
+}
+
+.aPhoto {
+	width: 170px;
+	box-shadow: 3px 3px 3px black;
+	margin: 20px;
+	float: left;
+}

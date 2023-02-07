@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- HTML vs Servlet 어느 것을 쓸지 고민될 때
+	그 페이지에 프로그래밍언어(Java)쪽 기능이 필요한가? 를 따져본다 맞다면 Servlet
+	아니면 HTML로 하는 게 편할 것 -->
+	<hr>
+	<!--  
+		페이지 이동 - x
+		파일 열기 - x
+		GET방식 요청 - o <- 진짜 정체
+	-->
+	<a href="Calculator?xxx=10&yyy=2">10, 2 계산하기</a>
+	<hr>
+	<a href="NewGugudan?dan=3&border=2">3단, 테두리 2짜리</a>
+	<hr>
+	<a href="GugudanServlet">구구단 전체보기</a>
+	<hr>
+	<!--  
+		<form> + <input> + <button> 조합
+		form속의 button누르면 action에 쓴 곳으로 GET방식 요청 날라감
+		input의 name들을 parameter명, 값들을 값 삼아서 붙여준다
+	-->
+	<form action="AAA">
+		<input name="BBB"> <input name="CCC">
+		<button>버튼</button>
+	</form>
+	<hr>
+	<form action="Calculator">
+		x : <input name="xxx"> <br>
+		y : <input name="yyy"> <br>
+		<button>계산</button>
+	</form>
+	<hr>
+	<form action="NewGugudan">
+		단 : <input name="dan" type="number" min="2" max="9"> <br>
+		테두리 : <input name="border" type="number" max="10"> <br>
+	<button>조회</button>
+	</form>	
+</body>
+</html>
