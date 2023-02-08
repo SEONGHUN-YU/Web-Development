@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css\fileupload.css">
+</head>
+<body>
+	<!--
+		기존 tomcat의 인코딩 방식[종이박스포장 느낌?]
+			사용자가 입력한 글자/숫자는 인코딩할 줄 아는데
+			파일[물기가 많은 상자? 느낌]을 인코딩할 줄 모름 -> 인코딩시스템을 직접 만들어야...
+			=> 하지만 oreilly사에서 만들어줬음 (cos.jar)
+		cos.jar의 인코딩 방식으로[플라스틱 포장] 바꿔주는 것 <- 양식이 정해져 있음 그냥 암기
+			1. 파일이 업로드 될 폴더하나 확보
+				프로젝트에 만들어 놓으면 이 프로젝트를 나중에 서버에 갖다놓을 거니
+				-> 거기도 폴더가 생길 것
+			2. POST방식으로
+				파라메터 값들이 주소에 실려가는 GET방식으로 당연히 안 됨...
+			3. 포장방식을 바꾸기 (method="post" enctype="multipart/form-data")로 <- 이렇게 해주면 파일 업로드 가능
+			=> 이제 .java 파일로 이동
+	-->
+	<form action="Upload" method="post" enctype="multipart/form-data">
+		제목 : <input name="title"><br>
+		사진 : <input name="photo" type="file"><br>
+		<button>등록</button>
+	</form>
+</body>
+</html>

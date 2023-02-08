@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/join.css">
+</head>
+<body>
+	<form action="JoinResult" method="post">
+		<table>
+			<!-- 양식 -->
+			<tr>
+				<th colspan="2">회원가입</th>
+			</tr>
+			
+			<tr>
+				<td class="td1">이름</td>
+				<td><input name="name" class="boxType" placeholder="이름"></td>
+			</tr>
+			
+			<tr>
+				<td class="td1">ID</td>
+				<td><input name="id" class="boxType" placeholder="한글 노노"></td>
+			</tr>
+			
+			<tr>
+				<td class="td1">PW</td>
+				<td><input name="pw" class="boxType" placeholder="숫자 하나 이상 반드시"
+					type="password"></td>
+			</tr>
+			
+			<tr>
+				<td class="td1">주소</td>
+				<td>
+				 <!-- 목록 중에 하나만 반드시 선택 <- radio --> 
+					<input type="radio" name="addr" checked="checked" value="수도권">수도권
+					<br>
+					<input type="radio" name="addr" value="기타">기타
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="td1">거주형태</td>
+				<td>
+					<!-- select에는 디자인을 주자, 다만 option들에 대한 디자인은 좀 포기하는 게 낫다, 이것도 하나만 선택 가능 -->
+					<select name="house" id="houseSelect">
+						<option>아파트</option>
+						<option>주택</option>
+						<option>주상복합</option>
+						<option>비닐하우스</option>
+						<option>길</option>
+						<option>기숙사</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="td1">취미</td>
+			 	<td align="center">
+					<!-- 
+						목록 중에 다중 선택 (선택을 아예 안 할 수도 있다) 
+							요청파라메터 1 : 값 1
+							          name : 홍길동
+							          name=홍길동&id=hong&...
+							          GET/POST 아무거나 쓸 수 있음
+							          
+							요청파라메터 1 : 값 n
+									 hooby : 운동, 게임
+									 값을 주소에 담기가 애매함
+									 checkbox가 들어가면 POST이어야만 함
+					-->
+					<input type="checkbox" name="hobby" value="운동">운동
+					<br>
+					<input type="checkbox" name="hobby" value="게임">게임
+					<br>
+					<input type="checkbox" name="hobby" value="잠">잠
+					<br>
+					<input type="checkbox" name="hobby" value="승마">승마
+					<br>
+					<input type="checkbox" name="hobby" value="코딩">코딩
+					<br>
+					<input type="checkbox" name="hobby" value="만화">만화
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="td1">등원수단</td>
+				<td align="center">
+					<input type="checkbox" name="way" value="지하철">지하철
+					<br>
+					<input type="checkbox" name="way" value="버스">버스
+					<br>
+					<input type="checkbox" name="way" value="택시">택시
+					<br>
+					<input type="checkbox" name="way" value="걷기">걷기
+					<!-- 
+					<select name="way" multiple="multiple" size="3">
+						<option>지하철</option>
+						<option>버스</option>
+						<option>걷기</option>
+						<option>택시</option>
+					</select>
+						multiple 해주면 다중 선택은 가능하지만...
+						UX측면에서 0점... 이렇게는 쓰지 말자 
+					-->
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="td1">인삿말</td>
+				<td align="center">
+					<!-- <input name="cmt" class="boxType" placeholder="인삿말"> // 클라이언트가 줄바꿈이 안 됨, 엔터치면 요청이 되어버림 -->
+					<textarea name="cmt" class="boxType" placeholder="있다면 쓰세요"></textarea>
+					<!-- textarea 치면 나오는 rows, cols는 지워버릴 것, css에서 하는 게 훨씬 나음... -->
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="center" colspan="2">
+				<input class="btnType" type="image" src="img\button.jpg"><br>
+				<!-- 그림으로된 요청버튼 -->
+				<input class="btnType" type="submit" value="가입"><br>
+				<!-- form에 요청하는 버튼 오리지널 방식 -->
+				<input class="btnType" type="reset" value="다 지우고 다시"><br>
+				<!-- form에 쓴 거 다 지워주는 버튼 -->
+				<button class="btnType">가입[JavaScript용]</button> <!-- // JavaScript랑 연동시키기 위해 있는 느낌? -->
+				<!-- ↑ 거의 대부분 이걸로만 씀, 주된 방식, 기억해두자 --> <!--  
+					브라우저들이 요즘들어서 [...꽤 오래되긴 했지만]
+					form속에 버튼 모양나는 거 아무거나 누르면 요청이 가게 바뀜
+					그래서 button만으로도 가능한 것
+				-->
+				</td>
+			</tr>
+			
+		</table>
+	</form>
+	
+	<input type="file"> <!-- 얘도 곧 배우게 될 것 -->
+	
+	<!--  
+		HTML 5에서 새로운 type들이 대거 추가됨
+		우리가 지금까지 배운 애들은 전통적인 애들 IE에서도 잘 나옴
+		HTML 5에서 새로 추가된 애들은 IE에서 안 나옴... 그래서 호환이 안 될 수도 있다 참고할 것!
+		
+		날짜 : <input type="datetime-local"> 같은 게 새로 추가되었다
+	-->
+</body>
+</html>

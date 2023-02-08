@@ -1,0 +1,92 @@
+@charset "EUC-KR";
+
+@font-face {
+	font-family: "coconut";
+	src: url("DNFBitBitTTF.ttf");
+}
+
+body {
+	background-color: #ECEFF1;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 3px 3px 3px #9575CD;
+	width: 300px;
+	border-spacing: 0px;
+}
+
+th {
+	font-size: 30pt;
+	background-color: #9575CD;
+	color: #ECEFF1;
+	height: 70px;
+	text-shadow: 3px 3px 3px black;
+}
+
+.td1 {
+	background-color: #9575CD;
+	color: #ECEFF1;
+	font-size: 15pt;
+	width: 70px;
+	height: 50px;
+	padding-left: 10px;
+}
+
+/* .boxType::placeholder {
+	color: black;
+} */
+.boxType {
+	font-family: "coconut";
+	font-size: 20pt;
+	border: none;
+	border-bottom: #9575CD solid 3px;
+	padding: 15px;
+	outline: none;
+	text-align: center; /* outline, text-align은 input에만 쓸 수 있는 애들 */
+}
+
+.boxType:focus {
+	border-bottom: #9575CD solid 3px;
+}
+
+#houseSelect {
+	font-family: "coconut";
+	background-color: transparent;
+	border: none;
+	border-bottom: #9575CD solid 3px;
+	width: 90%;
+	height: 40px;
+	font-size: 15pt;
+	outline: none;
+	text-align: center;
+}
+
+.btnType {
+	border: none;
+	background-color: transpan;
+	color: #9575CD;
+	font-size: 20pt;
+	margin: 15px;
+	font-family: "coconut";
+	font-weight: 900;
+	cursor: pointer;
+}
+
+.btnType:hover {
+	color: #512DA8;
+	text-shadow: 3px 3px 3px black;
+}
+
+textarea {
+	font-family: "coconut";
+	background-color: transparent;
+	border: none;
+	border-bottom: #9575CD solid 3px;
+	width: 90%;
+	height: 100px;
+	font-size: 15pt;
+	outline: none;
+	resize: none; /* 사이즈 변경 못 하게 */
+}
