@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	// interpreter방식 -> main이 따로 없는
+	
+	// public static 리턴타입 메소드명(자료형 변수명, ...){
+	//	 x		x		x		 o
+	// }
+
+	// function name(변수명, 변수명, ...) {
+	// }
+	function yaDambae() {
+		alert("가서 사와");
+	}
+	
+	function getHab(a, b) { // (var 변수명, var 변수명, ...) 식으로 안 쓴다 자료형 아예 안 씀
+		return a + b;
+	}
+	
+	// yaDambae();
+	// var c = getHab(23, 45);
+	// alert(c);
+	
+	// JS를 제대로 쓰는 방법
+	// 1. 함수 제작
+	function showAlert() {
+		alert("ㅎㅇ");
+	}
+</script>
+<script type="text/javascript" src="test.js"></script>
+<script type="text/javascript" src="newTest.js"></script>
+</head>
+<body>
+	<h1 ondblclick="test3();">에이치원</h1>
+	<button onmouseenter="test2();">ㅋ 다섯번</button>
+	<!-- 2. DOM객체의 onXXX에 함수 연결시키기
+		이 버튼의 click이벤트에 showAlert()함수를 연결 시켜놓은 상태
+		-> click이벤트가 일어나면 showAlert()함수가 자동으로 호출됨
+		
+		callback함수 <- 지금의 showAlert() 함수처럼 사용되는 애들
+			어떤 이벤트에 연결되어서, 그 이벤트가 발생하면 자동으로 호출되는 함수
+	-->
+	<button onclick="showAlert();">경고창</button>
+</body>
+</html>
