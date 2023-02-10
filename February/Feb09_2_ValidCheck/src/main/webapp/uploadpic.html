@@ -4,12 +4,15 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css\uploadpic.css">
+<script type="text/javascript" src="YUValidChecker.js"></script>
+<script type="text/javascript" src="feb092check.js"></script>
 </head>
 <body>
-	<form action="Uploadpic" method="post" enctype="multipart/form-data">
-		사진 : <input type="file" name="pict">
-		가로 : <input name="width"><br>
-		세로 : <input name="height"><br>
+	<form name="f" onsubmit="return check();" action="Uploadpic"
+		method="post" enctype="multipart/form-data">
+		사진 : <input type="file" name="pic"><br>
+		가로 : <input name="width" placeholder="가로 크기 입력" maxlength="4"><br>
+		세로 : <input name="height" placeholder="세로 크기 입력" maxlength="4"><br>
 		<button>출력?</button>
 	</form>
 </body>

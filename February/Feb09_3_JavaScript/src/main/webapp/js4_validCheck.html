@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function check() {
+		var idBox = document.fff.id; // document.form이름.input이름
+		var pwBox = document.fff.pw;
+		var pwChkBox = document.fff.pwChk;
+		var ageBox = document.fff.age;
+		// document : 이 HTML
+		// ~~~.value : 그 input에 쓴 내용
+		if (!idBox.value) { // 안 썼나
+			alert("id 써");
+			idBox.focus(); // 커서 갖다놓기
+			return false;
+		}
+		// 문제를 일으키게 해놓고 체크 vs 애초에 안 생기게 해놓기
+		// id에 한글 : 해도 됨, 한글 허용해놓으면 개발자가 작업량이 폭증
+		// 한글, 특수문자 못 쓰게 해두기 <- 엄청 복잡하니까...(쓸 수 있도록 가능은 함)
+
+		if (!pwBox.value) {
+			alert("pw 써");
+			pwBox.focus();
+			return false;
+		}
+		if (pwBox.value.length < 5) {
+			alert("pw 더 써");
+			pwBox.focus();
+			return false;
+		}
+		// pw확인 : 필수, 5~10자, pw랑 pw확인이 같아야
+		if (pwBox.value != pwChkBox.value) { // pw랑 pwChk가 다르나 확인
+			alert("pw가 달라");
+			pwBox.value = "";
+			pwChkBox.value = "";
+			pwBox.focus();
+			return false;
+		}
+		// 영어+숫자 조합체크 <- 나중에 하자
+		if (!ageBox.value) {
+			alert("나이를 써");
+			ageBox.focus();
+			return false;
+		}
+		if (isNaN(ageBox.value)) { // 숫자 아닌 거 썼나
+			alert("숫자만 써")
+			ageBox.value = "";
+			ageBox.focus();
+			return false;
+		}
+		// 비밀번호에 짝수 하나 이상
+		var evenNo = "2468";
+		var evenNoOK = false; // 일단은 포함 안 됨
+		var alpha = "abcd";
+		var alphaOK = false;
+		// 포함됐나 검사해서 evenNoOk = true;
+
+		for (var i = 0; i < alpha.length; i++) {
+			if (pwBox.value.indexOf(alpha[i]) != -1) {
+				alphaOK = true;
+				break;
+			}
+		}
+		for (var i = 0; i < evenNo.length; i++) {
+			if (pwBox.value.indexOf(evenNo[i]) != -1) {
+				evenNoOK = true;
+				break;
+			}
+		}
+		if (!evenNoOK || !alphaOK) {
+			alert("비번에 짝수 넣어");
+			pwBox.value = "";
+			pwChkBox.value = "";
+			pwBox.focus();
+			return false;
+		}
+		return true;
+	}
+	/* if (pwBox.value!=evenNo.charAt(i)){ 초안, 잘못 생각함
+			alert("비번에 짝수 넣어");
+			pxBox.value = "";
+			pxBox.focus();
+			return false;
+		} */
+</script>
+</head>
+<body>
+	<!-- onsubmit : (버튼을 눌렀든, 엔터를 쳤든, 뭔짓이든) 요청할 때 
+			return true; -> 요청 출발
+			return false; -> 요청 출발 안 함
+	-->
+	<form name="fff" onsubmit="return check();" action="이쪽으로 요청">
+		id : <input name="id" maxlength="10" autofocus="autofocus"><br>
+		pw : <input name="pw" maxlength="10" type="password"><br>
+		pw확인 : <input name="pwChk" maxlength="10" type="password"><br>
+		나이 : <input name="age" maxlength="3"><br> <input
+			type="submit" value="원래는 이거 누르면">
+		<button>이거 누르면</button>
+	</form>
+</body>
+</html>
