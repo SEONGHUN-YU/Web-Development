@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="..\css\index.css">
+<script type="text/javascript" src="YUValidChecker.js"></script>
+<script type="text/javascript" src="ucCheck.js"></script>
+<!-- <script type="text/javascript">
+	var s = "1 + 2";
+	var ss = eval(s);
+	alert(ss);
+</script> -->
+</head>
+<body>
+	<form name="ucForm" onsubmit="return check();" action="output.jsp" method="post">
+		<table name="cc">
+			<tr>
+				<th>변환할 값</th>
+			</tr>
+			<tr>
+				<td>
+					<input name="changevalue" autocomplete="off" autofocus="autofocus" placeholder="변환할 숫자 입력">
+				</td>
+			</tr>	
+			<tr>
+				<td align="center">
+					단위
+					<select name="changeresult">
+						<option value="len">cm -> inch</option>
+						<option value="size">㎡ -> 평</option>
+						<option value="temp">℃ -> ℉</option>
+						<option value="spd">km/h -> mi/h</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<button>변환</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

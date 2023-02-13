@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css\feb131check.css">
+<script type="text/javascript" src="YUValidChecker.js"></script>
+<script type="text/javascript" src="feb131check.js"></script>
+<script type="text/javascript">
+	function go() {
+		var xInput = document.getElementById("xx");
+		var yInput = document.getElementById("yy");
+
+		if (isEmpty(xInput)) {
+			alert("x를 써");
+		} else {
+			location.href = "output.jsp?xxx=" + xInput.value + "&yyy=" + yInput.value;
+		}
+	}
+</script>
+</head>
+<body>
+	<a href="output.jsp?xxx=10&yyy=5">10, 5로</a>
+	<hr>
+	x : <input id="xx"><br>
+	y : <input id="yy"><br>
+	<button ondblclick="go();">버튼</button>
+	<hr>
+	<form name="f" onsubmit="return check();" action="output.jsp">
+		x : <input name="xxx" placeholder="숫자만" autofocus="autofocus" autocomplete="off"><br>
+		y : <input name="yyy" placeholder="숫자만" autocomplete="off"><br>
+		<button>버튼</button>
+	</form>
+</body>
+</html>
