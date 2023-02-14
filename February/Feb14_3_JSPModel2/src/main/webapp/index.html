@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript">
+	// JavaScript에 내장된 객체들
+	// document : 현재 이 html
+	// navigator : 브라우저 - 기능적으로 접근할 때 쓰는 애
+	// window : 브라우저 - 디자인적으로 접근할 때 쓰는 애
+	// alert(navigator.userAgent); // 브라우저 정보를 볼 수 있음
+	if (navigator.userAgent.indexOf("Android") != -1
+			|| navigator.userAgent.indexOf("iPhone") != -1) {
+		// location.href = "MobileHomeController";
+		location.href = "https://www.naver.com";
+	}else {
+		location.href = "HomeController";
+	}
+	// location.href = "HomeController"; /* 진짜 대문 */
+</script>
+</head>
+<body>
+	<!--  
+		html은 기본적으로 V지만
+		index.html은 C로 쓸래
+	-->
+</body>
+</html>

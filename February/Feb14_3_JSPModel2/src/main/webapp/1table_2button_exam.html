@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<link rel="stylesheet" href="css\index.css">
+<script type="text/javascript" src="js\YUValidChecker.js"></script>
+<script type="text/javascript" src="js\index.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<form name="f" onsubmit="return check();" action="HomeController"
+			method="post" enctype="multipart/form-data">
+		<tr>
+			<th>비만도검사</th>
+		</tr>
+		<tr>
+			<td align="center"><input name="name" placeholder="이름"
+				autofocus="autofocus" autocomplete="off"></td>
+		</tr>
+		<tr>
+			<td align="center"><input name="height" placeholder="키"
+				autocomplete="off"></td>
+		</tr>
+		<tr>
+			<td align="center"><input name="weight" placeholder="몸무게"
+				autocomplete="off"></td>
+		</tr>
+		<tr>
+			<td align="center"><input name="img" type="file"></td>
+		</tr>
+		<tr>
+			<td align="center">
+				<button>결과보기</button>
+			</td>
+		</tr>
+		</form>
+		<form>
+			<tr>
+				<td>
+					<button>회원가입</button>
+				</td>
+			</tr>
+		</form>
+	</table>
+</body>
+</html>

@@ -1,0 +1,38 @@
+@charset "EUC-KR";
+
+table {
+	box-shadow: 3px 3px 3px rgb(128, 255, 255);
+	background-color: rgb(255, 255, 128);
+	width: 250px;
+}
+
+th {
+	color: rgb(128, 128, 255);
+	font-size: 20pt;
+	height: 60px;
+}
+
+td {
+	color: rgb(128, 128, 255);
+	font-size: 20pt;
+	height: 50px;
+}
+
+input {
+	outline: none;
+	background-color: rgb(255, 128, 64);
+	width: 90%;
+	height: 30px;
+	border: none;
+}
+
+button {
+	outline: none;
+	width: 92.5%;
+	height: 40px;
+	background-color: rgb(255, 128, 128);
+	border: rgb(0, 0, 0) solid 3px;
+	color: rgb(128, 128, 255);
+	font-size: 15pt;
+	font-weight: 900;
+}

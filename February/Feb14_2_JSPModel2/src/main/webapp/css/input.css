@@ -1,0 +1,71 @@
+@charset "EUC-KR";
+
+@font-face {
+	/*  
+		css(V) : 웹디자이너꺼
+	*/
+	font-family: "coconut";
+	src: url("DNFBitBitTTF.ttf");
+}
+
+body, input, select, button {
+	font-family: "coconut";
+}
+
+input, select, button {
+	color: #9575CD;
+	width: 200px;
+	border: none;
+	padding: 10px;
+	font-size: 17pt;
+	outline: none;
+	text-align: center;
+	width: 200px;
+}
+
+table {
+	border: #673AB7 solid 2px;
+	box-shadow: 2px 2px 2px #9575CD;
+}
+
+th {
+	font-size: 25pt;
+	text-shadow: 2px 2px 2px #9575CD;
+	height: 70pxx;
+}
+
+#len {
+	border: #673AB7 solid 2px;
+	box-shadow: 2px 2px 2px #EC407A;
+}
+
+#size {
+	border: #673AB7 solid 2px;
+	box-shadow: 2px 2px 2px #42A5F5;
+}
+
+#temp {
+	border: #673AB7 solid 2px;
+	box-shadow: 2px 2px 2px #FFEB3B;
+}
+
+#spd {
+	border: #673AB7 solid 2px;
+	box-shadow: 2px 2px 2px #26A69A;
+}
+
+.lenShadow {
+	color: #EC407A;
+}
+
+.sizeShadow {
+	color: #42A5F5;
+}
+
+.tempShadow {
+	color: #FFEB3B;
+}
+
+.spdShadow {
+	color: #26A69A;
+}
