@@ -1,0 +1,1 @@
+select * from JAN30_RESTAREA;
