@@ -34,6 +34,8 @@
 							<a href="LottoController">로또 번호 자동추첨</a>
 							<a href="JSTLCController">JSTL-core</a>
 							<a href="WeatherController">기상청 날씨</a>
+							<a href="JSTLFController">JSTL-formatting</a>
+							<a href="BookController">책 검색</a>
 						</td>
 					</tr>
 				</table>

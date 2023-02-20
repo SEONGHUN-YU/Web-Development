@@ -4,15 +4,17 @@ public class Weather {
 	private String hour;
 	private String temp;
 	private String wfKor;
+	private String img;
 
 	public Weather() {
 	}
 
-	public Weather(String hour, String temp, String wfKor) {
+	public Weather(String hour, String temp, String wfKor, String img) {
 		super();
 		this.hour = hour;
 		this.temp = temp;
 		this.wfKor = wfKor;
+		this.img = img;
 	}
 
 	public String getHour() {
@@ -37,5 +39,13 @@ public class Weather {
 
 	public void setWfKor(String wfKor) {
 		this.wfKor = wfKor;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 }

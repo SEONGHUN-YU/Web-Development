@@ -28,7 +28,7 @@ public class WeatherDAO {
 
 		HttpsURLConnection huc = null;
 		try {
-			URL u = new URL("https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1165051000");
+			URL u = new URL("https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1168064000");
 			huc = (HttpsURLConnection) u.openConnection();
 			InputStream is = huc.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is, "utf-8");
@@ -37,27 +37,45 @@ public class WeatherDAO {
 			xpp.setInput(isr);
 
 			ArrayList<Weather> ws = new ArrayList<>();
+			Weather w = null;
 			int type = xpp.getEventType();
 			String t = null;
 			while (type != XmlPullParser.END_DOCUMENT) {
 				if (type == XmlPullParser.START_TAG) {
 					t = xpp.getName();
+					if (t.equals("data")) {
+						w = new Weather();
+					}
 				} else if (type == XmlPullParser.TEXT) {
 					if (t.equals("hour")) {
-						xpp.getText();
+						w.setHour(xpp.getText());
 					} else if (t.equals("temp")) {
-						xpp.getText();
+						w.setTemp(xpp.getText());
 					} else if (t.equals("wfKor")) {
-						xpp.getText();
+						w.setWfKor(xpp.getText());
+						if (xpp.getText().equals("맑음")) {
+							w.setImg("sun.png");
+						} else if (xpp.getText().equals("흐림") || xpp.getText().equals("구름 많음")) {
+							w.setImg("cloud.png");
+						} else if (xpp.getText().equals("눈")) {
+							w.setImg("snow.png");
+						} else {
+							w.setImg("rain.png");
+						}
 					}
 				} else if (type == XmlPullParser.END_TAG) {
 					t = "";
+					if (xpp.getName().equals("data")) {
+						ws.add(w);
+					}
 				}
 				xpp.next();
 				type = xpp.getEventType();
 			}
+			req.setAttribute("ws", ws); // ArrayList채로 보내기
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		huc.disconnect();
 	}
 }

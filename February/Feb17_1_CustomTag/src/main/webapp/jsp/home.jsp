@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Ȩ</h1>
+	<img alt="" src="img/home.jpg">
 </body>
 </html>
