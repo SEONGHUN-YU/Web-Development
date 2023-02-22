@@ -1,0 +1,55 @@
+@charset "EUC-KR";
+
+#loginTbl {
+	width: 250px;
+}
+
+#loginTbl input {
+	width: 200px;
+	height: 30px;
+	font-size: 15pt;
+	border: black solid 3px;
+}
+
+#loginTbl button {
+	border: none;
+	background-color: transparent;
+	font-size: 15pt;
+}
+
+#joinTbl {
+	width: 760px;
+	height: 700px;
+	font-size: 15pt;
+}
+
+#joinTbl th {
+	font-size: 30pt;
+	height: 80px;
+}
+
+#joinTbl input {
+	width: 750px;
+	height: 45px;
+	font-size: 15pt;
+	border: black solid 3px;
+	padding: 5px;
+}
+
+#joinTbl select {
+	width: 200px;
+	height: 45px;
+	font-size: 15pt;
+	border: black solid 3px;
+	padding: 5px;
+}
+
+#joinTbl .subTitle {
+	padding-top: 25px;
+}
+
+#joinTbl button {
+	border: none;
+	background-color: transparent;
+	font-size: 30pt;
+}

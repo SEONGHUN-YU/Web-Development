@@ -1,0 +1,81 @@
+@charset "EUC-KR";
+
+a {
+	text-decoration: none;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+table {
+	border-spacing: 0px;
+}
+
+input {
+	outline: none;
+}
+
+#siteTitleArea {
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+}
+
+#siteMenuArea {
+	width: 1200px;
+	height: 40px;
+}
+
+#siteMenuArea2 {
+	background-color: #000000DD;
+}
+
+#siteMenuArea a {
+	color: white;
+	font-size: 15pt;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#siteTitleArea3 {
+	background-color: #FFFFFFDD;
+}
+
+#siteTitleArea2 {
+	width: 1200px;
+	height: 70px;
+}
+
+#siteTitleArea2 a {
+	color: black;
+	font-size: 30pt;
+	text-shadow: 2px 2px 2px #78909C;
+}
+
+#siteLoginArea {
+	position: fixed;
+	width: 250px;
+	top: 115px;
+	right: 100px;
+}
+
+#siteContentArea {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1200px;
+	padding-top: 170px;
+}
+
+#homeImg {
+	max-height: 650px;
+}
+
+#result {
+	position: fixed;
+	top: 90px;
+	right: 120px;
+	z-index: 5; /* 레이어 순서 맥이기 */
+}
