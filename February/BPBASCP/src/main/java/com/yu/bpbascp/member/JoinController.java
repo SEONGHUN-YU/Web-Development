@@ -17,16 +17,18 @@ public class JoinController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		DateManager.getCurYear(request);
-		request.setAttribute("loginPage", "member/login_2btn.jsp");
+		MemberDAO.isLogined(request);
+//		request.setAttribute("loginPage", "member/login_2btn.jsp");
 		request.setAttribute("contentPage", "member/join.jsp");
 		request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
 	}
-
+	
 	// 가입하기
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		MemberDAO.join(request);
-		request.setAttribute("loginPage", "member/login_2btn.jsp");
+		MemberDAO.isLogined(request);
+//		request.setAttribute("loginPage", "member/login_2btn.jsp");
 		request.setAttribute("contentPage", "home.jsp");
 		request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
 	}

@@ -7,8 +7,11 @@
 #loginTbl input {
 	width: 200px;
 	height: 30px;
+	margin: 7px;
+	padding: 7px;
 	font-size: 15pt;
 	border: black solid 3px;
+	box-shadow: 3px 3px 3px #78909C;
 }
 
 #loginTbl button {
@@ -52,4 +55,26 @@
 	border: none;
 	background-color: transparent;
 	font-size: 30pt;
+}
+
+#welcomeTbl {
+	width: 250px;
+}
+
+#welcomeTbl .imgTd {
+	width: 80px;
+}
+
+#welcomeTbl img {
+	max-width: 70px;
+}
+
+#welcomeTbl .memberTd {
+	font-size: 15pt;
+}
+
+#welcomeTbl button {
+	border: none;
+	background-color: transparent;
+	font-size: 16pt;
 }

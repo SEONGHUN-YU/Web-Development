@@ -1,4 +1,4 @@
-package com.yu.bpbascp.main;
+package com.yu.bpbascp.member;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yu.bpbascp.member.MemberDAO;
-
-@WebServlet("/HomeController")
-public class HomeController extends HttpServlet {
+@WebServlet("/MemberInfoController")
+public class MemberInfoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		MemberDAO.isLogined(request);
-//		request.setAttribute("loginPage", "member/login_2btn.jsp");
-		request.setAttribute("contentPage", "home.jsp");
+		if (MemberDAO.isLogined(request)) {
+			request.setAttribute("contentPage", "member/info.jsp");
+		} else {
+			request.setAttribute("contentPage", "home.jsp");
+		}
 		request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
 	}
 
