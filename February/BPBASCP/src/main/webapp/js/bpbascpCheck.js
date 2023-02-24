@@ -40,7 +40,6 @@ function regCheck() {
 		photoBox.value = "";
 		return false;
 	}
-
 	return true;
 }
 
@@ -61,6 +60,55 @@ function loginCheck() {
 		idField.value = "";
 		pwField.value = "";
 		idField.focus();
+		return false;
+	}
+	return true;
+}
+
+function memberUpdateCheck() {
+	var pw = document.memberUpdateForm.pw;
+	var pwchk = document.memberUpdateForm.pwchk;
+	var photo = document.memberUpdateForm.photo;
+
+	if (isEmpty(pw) || isEmpty(pwchk)
+		|| notEquals(pw, pwchk)
+		|| notContainsLetter(pw, "1234567890")) {
+		alert("비밀번호 확인");
+		pw.value = "";
+		pwchk.value = "";
+		pw.focus();
+		return false;
+	}
+
+	if (isEmpty(photo)) {
+		return true;
+	}
+
+	if (compareType(photo, "jpg")
+		&& compareType(photo, "png")
+		&& compareType(photo, "gif")) {
+		alert("프사 확인");
+		photo.value = "";
+		return false;
+	}
+	return true;
+}
+
+function noticeWriteCheck() {
+	var titleBox = document.noticeWriteForm.title;
+	var txtBox = document.noticeWriteForm.txt;
+
+	if (isEmpty(titleBox)) {
+		alert("제목 입력 필수");
+		titleBox.value = "";
+		titleBox.focus();
+		return false;
+	}
+
+	if (isEmpty(txtBox)) {
+		alert("내용 입력 필수");
+		txtBox.value = "";
+		txtBox.focus();
 		return false;
 	}
 	return true;

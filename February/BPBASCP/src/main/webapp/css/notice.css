@@ -1,0 +1,60 @@
+@charset "EUC-KR";
+
+#noticeBBSArea {
+	width: 80%;
+}
+
+#noticeWriteTbl {
+	width: 760px;
+	font-size: 15pt;
+}
+
+#noticeWriteTbl input {
+	width: 550px;
+	height: 45px;
+	font-size: 15pt;
+	border: black solid 3px;
+	padding: 5px;
+}
+
+#noticeWriteTbl textarea {
+	width: 550px;
+	height: 300px;
+	font-size: 15pt;
+	border: black solid 3px;
+	padding: 5px;
+	resize: none; /* textarea 쓸 때는 이거 꼭 해줄 것 */
+}
+
+#noticeWriteTbl button, #memberInfoTbl button {
+	border: none;
+	background-color: transparent;
+	font-size: 30pt;
+}
+
+#noticeBBS {
+	width: 800px;
+	background-color: black;
+	color: white;
+	font-size: 15pt;
+}
+
+#noticeBBS .dataTr {
+	background-color: white;
+	color: black;
+	height: 30px;
+	cursor: pointer;
+}
+
+#noticeBBS .dataTr:hover {
+	background-color: #78909C;
+}
+
+#noticeBBS .th1 {
+	width: 500px;
+	height: 35px;
+}
+
+#noticeBBS .th2 {
+	width: 150px;
+}

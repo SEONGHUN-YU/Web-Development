@@ -10,18 +10,18 @@
 <body>
 	<%-- 비번, 프사 수정 가능하게 --%>
 		<table id="memberInfoTbl">
-	<form action="">
+	<form name="memberUpdateForm" onsubmit="return memberUpdateCheck();" action="MemberInfoController" method="post" enctype="multipart/form-data">
 			<tr>
 				<th>${sessionScope.loginMember.id }(${sessionScope.loginMember.name })</th>
 			</tr>
 			<tr>
 				<td align="center">
-					<input name="pw" class="boxType" value="${sessionScope.loginMember.pw }" maxlength="10" placeholder="pw(숫자포함)" type="password">
+					<input name="pw" class="boxType" value="${sessionScope.loginMember.pw }" maxlength="10" placeholder="" type="password">
 				</td>
 			</tr>
 			<tr>
 				<td align="center">
-					<input name="pwChk" class="boxType" value="${sessionScope.loginMember.pw }" maxlength="10" placeholder="pw확인" type="password">
+					<input name="pwchk" class="boxType" value="${sessionScope.loginMember.pw }" maxlength="10" placeholder="" type="password">
 				</td>
 			</tr>
 			<tr>

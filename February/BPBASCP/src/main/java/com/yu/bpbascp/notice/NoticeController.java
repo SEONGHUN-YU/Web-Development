@@ -1,4 +1,4 @@
-package com.yu.bpbascp.member;
+package com.yu.bpbascp.notice;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,14 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/MemberInfoController")
-public class MemberInfoController extends HttpServlet {
+import com.yu.bpbascp.member.MemberDAO;
+
+@WebServlet("/NoticeController")
+public class NoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (MemberDAO.isLogined(request)) {
-			request.setAttribute("contentPage", "member/info.jsp");
+		// 게시판
+		//		로그인 안 해도 보여는 줄 건지
+		//		로그인해야만 볼 수 있게 할 건지
+		// 로그인 기능 있는데 정책 어떻게 할까? <- 팀끼리 상의해서 정하는 것
+		if (MemberDAO.isLogined(request)) { // 이번 정책은 로그인 없으면 못 보게
+			NoticeDAO.getNoticeDAO().get(request);
+			request.setAttribute("contentPage", "notice/notice.jsp");
 		} else {
 			request.setAttribute("contentPage", "home.jsp");
 		}
@@ -23,13 +30,5 @@ public class MemberInfoController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (MemberDAO.isLogined(request)) {
-			MemberDAO.update(request); // DB쪽 작업은 끝인데 세션데이터는 그대로임
-			MemberDAO.updateSession(request); // 세션데이터 업데이트가 안 되어 있었는데 갱신해줌
-			request.setAttribute("contentPage", "member/info.jsp");
-		} else {
-			request.setAttribute("contentPage", "home.jsp");
-		}
-		request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
 	}
 }

@@ -1,6 +1,7 @@
 package com.yu.bpbascp.member;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Connection;
@@ -61,7 +62,6 @@ public class MemberDAO {
 
 			if (pstmt.executeUpdate() == 1) {
 				req.setAttribute("result", "가입 성공");
-				System.out.println("등록 성공");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class MemberDAO {
 					m.setBirthday(rs.getDate("bm_birthday"));
 					m.setPhoto(rs.getString("bm_photo"));
 					req.getSession().setAttribute("loginMember", m); // 세션+셋어트리뷰트로 세션에 담을 수 있음
-					req.getSession().setMaxInactiveInterval(10);
+					req.getSession().setMaxInactiveInterval(60);
 				} else {
 					req.setAttribute("result", "로그인 실패 (비밀번호 틀림)");
 				}
@@ -184,5 +184,123 @@ public class MemberDAO {
 			req.setAttribute("result", "탈퇴 실패 (DB)");
 		}
 		YUDBManager.world(con, pstmt, null);
+	}
+
+	public static void update(HttpServletRequest req) {
+		// 내가 올린 파일 : a.png
+		// 서버에 이미 다른 사람이 올린 a.png가 있음, 이름만 같든지 사진까지 똑같든지 아무튼
+		// 결국 올려진 내 파일은 a1.png
+		// ★★
+		String path = req.getSession().getServletContext().getRealPath("img");
+		MultipartRequest mr = null;
+		try {
+			mr = new MultipartRequest(req, path, 10 * 1024 * 1024, "euc-kr", new DefaultFileRenamePolicy());
+		} catch (Exception e) {
+			// 프사 안 바꾸는 사람 : 파일 선택 안 한 사람 <- 이 쪽으로 안 옴, 해당사항 없음
+			// 프사 바꾸는 사람 : 파일 선택한 사람이 10MB 넘는 파일을 올렸을 때 걸리는 error
+			e.printStackTrace();
+			req.setAttribute("result", "정보수정 실패 (용량)");
+			return; // DB작업 할 필요도 없이 종료, 애초에 용량이 너무 큰데 밑으로 보낼 필요 없이 조기종료 시킴
+		}
+		// 프사 안 바꾸는 사람 or 프사 바꾸는 사람이 10MB 이하의 파일로 선택 했을 때 밑에 있는 작업 수행
+
+		String oldFile = null;
+		String newFile = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = YUDBManager.hello("DBServer");
+
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			String id = m.getId();
+			String pw = mr.getParameter("pw");
+			oldFile = m.getPhoto();
+			newFile = mr.getFilesystemName("photo");
+			// ↑ 업로드한 파일명 (중복된 파일명으로 인해 이름이 바뀌어 있을 내 파일명) ★★
+			if (newFile == null) { // 프사 안 바꾸는 사람일 때, 기존 파일명으로
+				newFile = oldFile;
+			} else { // 프사 바꾸는 사람이 10MB 이하 선택일 때, 서버에 올려야하니 encode
+				newFile = URLEncoder.encode(newFile, "euc-kr").replace("+", " ");
+			}
+			
+			String sql = "update bpbascp_member set bm_pw = ?, bm_photo = ? where bm_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pw);
+			pstmt.setString(2, newFile);
+			pstmt.setString(3, id);
+			if (pstmt.executeUpdate() == 1) {
+				// 프사 바꾸는 사람 : 기존 프사파일 삭제
+				// 프사 안 바꾸는 사람 : 할 거 없음
+				req.setAttribute("result", "정보수정 성공");
+				if (!oldFile.equals(newFile)) { // 프사 바꾸는 중인지 안 바꾸는 중인지 판별
+					new File(req.getSession().getServletContext().getRealPath("img") + "/"
+							+ URLDecoder.decode(oldFile, "euc-kr")).delete();
+				}
+//				updateSession(m.getId(), req); <- 이렇게 하는 방법도 #1
+			} else {
+				// 프사 바꾸는 사람 : 새 프사파일 삭제
+				// 프사 안 바꾸는 사람 : 할 거 없음
+				req.setAttribute("result", "잘못된 접근입니다");
+				if (!oldFile.equals(newFile)) {
+					new File(req.getSession().getServletContext().getRealPath("img") + "/"
+							+ URLDecoder.decode(newFile, "euc-kr")).delete();
+				}
+			}
+		} catch (Exception e) {
+			// 프사 바꾸는 사람 : 새 프사파일 삭제
+			e.printStackTrace();
+			req.setAttribute("result", "정보수정 실패 (DB)");
+			if (!oldFile.equals(newFile)) {
+				try {
+					new File(req.getSession().getServletContext().getRealPath("img") + "/"
+							+ URLDecoder.decode(newFile, "euc-kr")).delete();
+				} catch (Exception e2) {
+				}
+			}
+		}
+		YUDBManager.world(con, pstmt, null);
+	}
+	
+	// 현재 로그인 된 사람 id 세션+겟어트리뷰트로 받아서
+	// DB에 있을 최신정보를 select 해오고
+	// 세션+셋어트리뷰트로 다시 보내준 것
+	public static void updateSession(HttpServletRequest req) { // #1
+		// 요청은 한번인데 mr을 두번 생성 : 파일이 두번 업로드 되나? - X
+		// => exception 띄우면서 error
+//		String path = req.getSession().getServletContext().getRealPath("img");
+//		MultipartRequest mr = null;
+//		try {
+//			mr = new MultipartRequest(req, path, 10 * 1024 * 1024, "euc-kr", new DefaultFileRenamePolicy());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return;
+//		}
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = YUDBManager.hello("DBServer");
+			
+			Member oldM = (Member) req.getSession().getAttribute("loginMember");
+			
+			String sql = "select * from bpbascp_member where bm_id = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, oldM.getId());
+			rs = pstmt.executeQuery();
+			rs.next();
+			
+			Member newM = new Member();
+			newM.setId(rs.getString("bm_id"));
+			newM.setPw(rs.getString("bm_pw"));
+			newM.setName(rs.getString("bm_name"));
+			newM.setBirthday(rs.getDate("bm_birthday"));
+			newM.setPhoto(rs.getString("bm_photo"));
+			
+			req.getSession().setAttribute("loginMember", newM);
+			req.getSession().setMaxInactiveInterval(60);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		YUDBManager.world(con, pstmt, rs);
 	}
 }

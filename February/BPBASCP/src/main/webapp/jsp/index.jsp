@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/member.css">
+<link rel="stylesheet" href="css/notice.css">
 <script type="text/javascript" src="js/YUValidChecker.js"></script>
 <script type="text/javascript" src="js/bpbascpMove.js"></script>
 <script type="text/javascript" src="js/bpbascpCheck.js"></script>
@@ -19,7 +20,7 @@
 				<table id="siteMenuArea">
 					<tr>
 						<td>
-							<a href="">메뉴1</a>
+							<a href="NoticeController">공지사항</a>
 							<a href="">메뉴2</a>
 							<a href="">메뉴3</a>
 						</td>
