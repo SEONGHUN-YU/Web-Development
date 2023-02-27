@@ -111,7 +111,7 @@ public class MemberDAO {
 					m.setBirthday(rs.getDate("bm_birthday"));
 					m.setPhoto(rs.getString("bm_photo"));
 					req.getSession().setAttribute("loginMember", m); // 세션+셋어트리뷰트로 세션에 담을 수 있음
-					req.getSession().setMaxInactiveInterval(60);
+					req.getSession().setMaxInactiveInterval(600);
 				} else {
 					req.setAttribute("result", "로그인 실패 (비밀번호 틀림)");
 				}
@@ -222,7 +222,7 @@ public class MemberDAO {
 			} else { // 프사 바꾸는 사람이 10MB 이하 선택일 때, 서버에 올려야하니 encode
 				newFile = URLEncoder.encode(newFile, "euc-kr").replace("+", " ");
 			}
-			
+
 			String sql = "update bpbascp_member set bm_pw = ?, bm_photo = ? where bm_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, pw);
@@ -260,7 +260,7 @@ public class MemberDAO {
 		}
 		YUDBManager.world(con, pstmt, null);
 	}
-	
+
 	// 현재 로그인 된 사람 id 세션+겟어트리뷰트로 받아서
 	// DB에 있을 최신정보를 select 해오고
 	// 세션+셋어트리뷰트로 다시 보내준 것
@@ -280,24 +280,24 @@ public class MemberDAO {
 		ResultSet rs = null;
 		try {
 			con = YUDBManager.hello("DBServer");
-			
+
 			Member oldM = (Member) req.getSession().getAttribute("loginMember");
-			
+
 			String sql = "select * from bpbascp_member where bm_id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, oldM.getId());
 			rs = pstmt.executeQuery();
 			rs.next();
-			
+
 			Member newM = new Member();
 			newM.setId(rs.getString("bm_id"));
 			newM.setPw(rs.getString("bm_pw"));
 			newM.setName(rs.getString("bm_name"));
 			newM.setBirthday(rs.getDate("bm_birthday"));
 			newM.setPhoto(rs.getString("bm_photo"));
-			
+
 			req.getSession().setAttribute("loginMember", newM);
-			req.getSession().setMaxInactiveInterval(60);
+			req.getSession().setMaxInactiveInterval(600);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

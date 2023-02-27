@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yu.bpbascp.main.TokenGenerator;
 import com.yu.bpbascp.member.MemberDAO;
 
 @WebServlet("/NoticeWriteController")
@@ -24,10 +25,12 @@ public class NoticeWriteController extends HttpServlet {
 			throws ServletException, IOException {
 		if (MemberDAO.isLogined(request)) {
 			if (!request.getParameterNames().hasMoreElements()) {
+				TokenGenerator.generate(request); // 글 쓰러 갈 때마다 해주도록
 				request.setAttribute("contentPage", "notice/write.jsp");
 			} else {
+				NoticeDAO.getNoticeDAO().clearSearch(request);
 				NoticeDAO.getNoticeDAO().write(request);
-				NoticeDAO.getNoticeDAO().get(request);
+				NoticeDAO.getNoticeDAO().get(request, 1);
 				request.setAttribute("contentPage", "notice/notice.jsp");
 			}
 		} else {

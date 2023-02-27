@@ -24,7 +24,7 @@
 							<th>날짜</th>
 						</tr>
 					<c:forEach var="s" items="${notices }">
-						<tr class="dataTr">
+						<tr class="dataTr" onclick="goNoticeDetail(${s.no});">
 							<td>
 								${s.title }
 							</td>
@@ -41,12 +41,17 @@
 		</tr>
 		<tr>
 			<td align="center">
-				1 2 3 4
+				<c:forEach var="p" begin="1" end="${pageCount }">
+					<a href="NoticePageController?p=${p }">${p }</a>
+				</c:forEach>
 			</td>
 		</tr>
 		<tr>
-			<td align="center">
-				검색
+			<td align="center" id="noticeSearchArea">
+				<form action="NoticeSearchController">
+					<input name="search" maxlength="30" autocomplete="off">
+					<button>검색</button>
+				</form>
 			</td>
 		</tr>
 	</table>

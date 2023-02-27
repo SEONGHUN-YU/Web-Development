@@ -23,3 +23,7 @@ function bye() {
 		location.href = "ByeController";
 	}
 }
+
+function goNoticeDetail(bn) {
+	location.href = "NoticeDetailController?bn=" + bn; // bn_no (게시글 조회용도)
+}

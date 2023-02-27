@@ -8,6 +8,8 @@
 </head>
 <body>
 	<form name="noticeWriteForm" onsubmit="return noticeWriteCheck();" action="NoticeWriteController">
+		<%-- input name="token" value="${token }" readonly="readonly" --%>
+		<input name="token" value="${token }" type="hidden">
 		<table id="noticeWriteTbl">
 			<tr>
 				<td align="center">
