@@ -27,3 +27,13 @@ function bye() {
 function goNoticeDetail(bn) {
 	location.href = "NoticeDetailController?bn=" + bn; // bn_no (게시글 조회용도)
 }
+
+function writeNoticeReply() {
+	var noField = document.getElementById("bn_no"); // detail.jsp의 댓글 기능에서 가져옴 id="" 속의 값을 가져오는 것
+	var txtField = document.getElementById("txt");
+	var tokenField = document.getElementById("token");
+
+	if (!isEmpty(txtField)) {
+		location.href = "NoticeReplyWriteController?token=" + tokenField.value + "&no=" + noField.value + "&txt=" + txtField.value;
+	}
+}

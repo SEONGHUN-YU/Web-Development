@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yu.bpbascp.main.TokenGenerator;
 import com.yu.bpbascp.member.MemberDAO;
 
 @WebServlet("/NoticeDetailController")
@@ -17,6 +18,7 @@ public class NoticeDetailController extends HttpServlet {
 			throws ServletException, IOException {
 		if (MemberDAO.isLogined(request)) {
 			if (NoticeDAO.getNoticeDAO().getDetail(request)) {
+				TokenGenerator.generate(request);
 				request.setAttribute("contentPage", "notice/detail.jsp");
 			} else {
 				NoticeDAO.getNoticeDAO().get(request, 1); // 보던 페이지에 남아 있으려면...

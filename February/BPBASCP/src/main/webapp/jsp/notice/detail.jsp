@@ -40,6 +40,22 @@
 					<textarea name="txt">${notice.txt }</textarea>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2">
+						<c:forEach var="r" items="${replys }">
+						${r.writer } : ${r.txt } -
+						<fmt:formatDate value="${r.date }" type="both" dateStyle="short" timeStyle="short"/><br>
+						</c:forEach>
+						<hr>
+					<%--form action="BBB"--%><%-- form속의 form이라 button방식 불가능 JS로 처리 --%>
+						${sessionScope.loginMember.id }
+						<input id="token" value="${token }" type="hidden">
+						<input id="bn_no" value="${notice.no }" type="hidden">
+						<input id="txt" class="replyInput">
+						<span onclick="writeNoticeReply();">쓰기</span>
+					<%--/form--%>
+				</td>
+			</tr>
 			<c:choose>
 				<c:when test="${sessionScope.loginMember.id == member.id }">
 					<tr>

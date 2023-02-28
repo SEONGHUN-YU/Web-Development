@@ -43,6 +43,16 @@ public class NoticeDAO {
 		YUDBManager.world(con, pstmt, rs);
 	}
 
+	public int getAllNoticeCount() {
+		return allNoticeCount;
+	}
+
+	public void setAllNoticeCount(int allNoticeCount) {
+		System.out.println(this.allNoticeCount); ///////////////////////////////////////////// 나중에 지울거1212
+		this.allNoticeCount = allNoticeCount;
+		System.out.println(this.allNoticeCount); ///////////////////////////////////////////// 나중에 지울거112312
+	}
+
 	private int getSearchNoticeCount(String search) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -70,6 +80,57 @@ public class NoticeDAO {
 
 	public void search(HttpServletRequest req) {
 		req.getSession().setAttribute("search", req.getParameter("search"));
+	}
+
+	public void get(HttpServletRequest req, int page) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = YUDBManager.hello("DBServer");
+
+			int noticeCount = allNoticeCount;
+			String search = (String) req.getSession().getAttribute("search");
+			if (search == null) { // 전체조회
+				search = "";
+			} else { // 검색
+				noticeCount = getSearchNoticeCount(search);
+			}
+//			allNoticeCount / noticePerPage; <- 6
+//			allNoticeCount / (double) noticePerPage; <- 6.4
+//			Math.ceil(allNoticeCount / (double) noticePerPage) <- 7.0
+//			(int) Math.ceil(allNoticeCount / (double) noticePerPage) <- 7
+			int pageCount = (int) Math.ceil(noticeCount / (double) noticePerPage);
+			req.setAttribute("pageCount", pageCount);
+			int start = (page - 1) * noticePerPage + 1;
+			int end = page * noticePerPage;
+
+//			String sql = "select * from bpbascp_notice order by bn_date desc"; // 전체조회 같은 건 안 쓴다
+			String sql = "select * from(select rownum as rn, bn_no, bn_writer, bn_title, bn_date from(select bn_no, bn_writer, bn_title, bn_txt, bn_date from bpbascp_notice where bn_title like '%'||?||'%' or bn_txt like '%'||?||'%' order by bn_date desc)) where rn >= ? and rn <= ?";
+			// rownum으로 정렬해줌
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, start);
+			pstmt.setInt(4, end);
+			rs = pstmt.executeQuery();
+			ArrayList<Notice> ns = new ArrayList<>();
+			Notice n = null;
+			while (rs.next()) {
+				n = new Notice();
+				n.setNo(rs.getInt("bn_no"));
+				n.setWriterID(rs.getString("bn_writer"));
+				n.setTitle(rs.getString("bn_title"));
+//				n.setTxt(rs.getString("bn_txt")); rownum으로 불러올 때 부담 덜어주려고 뺌
+				n.setDate(rs.getDate("bn_date"));
+				ns.add(n);
+			}
+			req.setAttribute("notices", ns);
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("result", "조회 실패 (네트워크 문제)");
+		}
+		YUDBManager.world(con, pstmt, rs);
 	}
 
 	public void write(HttpServletRequest req) {
@@ -122,65 +183,38 @@ public class NoticeDAO {
 		YUDBManager.world(con, pstmt, null);
 	}
 
-	public void get(HttpServletRequest req, int page) {
+	public void update(HttpServletRequest req) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		try {
-			con = YUDBManager.hello("DBServer");
-
-			int noticeCount = allNoticeCount;
-			String search = (String) req.getSession().getAttribute("search");
-			if (search == null) { // 전체조회
-				search = "";
-			} else { // 검색
-				noticeCount = getSearchNoticeCount(search);
-			}
-//			allNoticeCount / noticePerPage; <- 6
-//			allNoticeCount / (double) noticePerPage; <- 6.4
-//			Math.ceil(allNoticeCount / (double) noticePerPage) <- 7.0
-//			(int) Math.ceil(allNoticeCount / (double) noticePerPage) <- 7
-			int pageCount = (int) Math.ceil(noticeCount / (double) noticePerPage);
-			req.setAttribute("pageCount", pageCount);
-			int start = (page - 1) * noticePerPage + 1;
-			int end = page * noticePerPage;
-
-			Member m = (Member) req.getSession().getAttribute("loginMember");
-
-//			String sql = "select * from bpbascp_notice order by bn_date desc"; // 전체조회 같은 건 안 쓴다
-			String sql = "select * from(select rownum as rn, bn_no, bn_writer, bn_title, bn_date from(select bn_no, bn_writer, bn_title, bn_txt, bn_date from bpbascp_notice where bn_title like '%'||?||'%' or bn_txt like '%'||?||'%' order by bn_date desc)) where rn >= ? and rn <= ?";
-			// rownum으로 정렬해줌
+			con = YUDBManager.hello("DBSever");
+			String sql = "update bpbascp_notice set bn_txt = ? where ";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, search);
-			pstmt.setString(2, search);
-			pstmt.setInt(3, start);
-			pstmt.setInt(4, end);
-			rs = pstmt.executeQuery();
-			ArrayList<Notice> ns = new ArrayList<>();
-			Notice n = null;
-			while (rs.next()) {
-				n = new Notice();
-				n.setNo(rs.getInt("bn_no"));
-				n.setWriterID(rs.getString("bn_writer"));
-				n.setTitle(rs.getString("bn_title"));
-//				n.setTxt(rs.getString("bn_txt")); rownum으로 불러올 때 부담 덜어주려고 뺌
-				n.setDate(rs.getDate("bn_date"));
-				ns.add(n);
+
+			if (pstmt.executeUpdate() == 1) {
+				req.setAttribute("result", "글 수정 성공");
 			}
-			req.setAttribute("notices", ns);
 		} catch (Exception e) {
 			e.printStackTrace();
-			req.setAttribute("result", "조회 실패 (네트워크 문제)");
+			req.setAttribute("result", "글 수정 실패 (네트워크 문제");
 		}
-		YUDBManager.world(con, pstmt, rs);
-	}
-
-	public void update(HttpServletRequest req) {
-		
 	}
 
 	public void delete(HttpServletRequest req) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = YUDBManager.hello("DBSever");
+			String sql = "delete from bpbascp_notice where ???";
+			pstmt = con.prepareStatement(sql);
 
+			if (pstmt.executeUpdate() == 1) {
+				req.setAttribute("result", "글 삭제 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("result", "글 삭제 실패 (네트워크 문제");
+		}
 	}
 
 	private void getDetailWriter(HttpServletRequest req) { // ID, 이름, 프사
@@ -217,6 +251,7 @@ public class NoticeDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				getDetailWriter(req); // join 사용을 피하기 위해 2개의 method로 나눠서 작업 (subquery를 써도 되긴 하지만 이런 방식도 가능)
+				getReply(req);
 				Notice n = new Notice();
 				n.setNo(Integer.parseInt(req.getParameter("bn")));
 				n.setTitle(rs.getString("bn_title"));
@@ -233,5 +268,90 @@ public class NoticeDAO {
 		} finally {
 			YUDBManager.world(con, pstmt, rs);
 		}
+	}
+
+	private void getReply(HttpServletRequest req) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = YUDBManager.hello("DBServer");
+			String sql = "select * from bpbascp_notice_reply where bnr_bn_no = ? order by bnr_date";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(req.getParameter("bn")));
+			rs = pstmt.executeQuery();
+			ArrayList<NoticeReply> replys = new ArrayList<>();
+			while (rs.next()) {
+				replys.add(new NoticeReply(rs.getInt("bnr_no"), Integer.parseInt(req.getParameter("no")),
+						rs.getString("bnr_writer"), rs.getString("bnr_txt"), rs.getDate("bnr_date")));
+			} // 참조변수와 변수 없이 new로 오버로딩된 생성자에 바로 집어넣고 ArrayList에 추가
+			req.setAttribute("reply", replys);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		YUDBManager.world(con, pstmt, rs);
+	}
+
+	public void writeReply(HttpServletRequest req) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = YUDBManager.hello("DBSever");
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			String sql = "insert into bpbascp_notice_reply values(bpbascp_notice_reply_seq.nextval, ?, ?, ?, sysdate";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(req.getParameter("no")));
+			pstmt.setString(2, m.getId());
+			pstmt.setString(3, req.getParameter("txt"));
+			if (pstmt.executeUpdate() == 1) {
+				req.setAttribute("result", "댓글 작성 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("result", "댓글 작성 실패 (네트워크 문제)");
+		}
+		YUDBManager.world(con, pstmt, null);
+	}
+
+	public void updateReply(HttpServletRequest req) { // rough
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = YUDBManager.hello("DBSever");
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			String sql = "update bpbascp_notice_reply set bnr_txt = ? where bnr_bn_no = ? and bnr_writer = ?";
+			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, req.getParameter("수정할 거")); // V에서 get방식으로 가져올 것
+			pstmt.setInt(2, Integer.parseInt(req.getParameter("no")));
+			pstmt.setString(3, m.getId());
+			if (pstmt.executeUpdate() == 1) {
+				req.setAttribute("result", "댓글 수정 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("result", "댓글 수정 실패 (네트워크 문제)");
+		}
+		YUDBManager.world(con, pstmt, null);
+	}
+
+	public void deleteReply(HttpServletRequest req) { // rough
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = YUDBManager.hello("DBSever");
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			String sql = "delete from bpbascp_notice_reply where bnr_no = ? and bnr_bn_no = ? and bnr_writer = ?";
+			pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, "수정할 거"); // V에서 EL로 가져올 것
+			pstmt.setInt(2, Integer.parseInt(req.getParameter("no")));
+			pstmt.setString(3, m.getId());
+			if (pstmt.executeUpdate() == 1) {
+				req.setAttribute("result", "댓글 삭제 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("result", "댓글 삭제 실패 (네트워크 문제)");
+		}
+		YUDBManager.world(con, pstmt, null);
 	}
 }

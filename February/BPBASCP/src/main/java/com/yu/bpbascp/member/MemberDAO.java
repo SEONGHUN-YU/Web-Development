@@ -12,11 +12,30 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.yu.bpbascp.notice.NoticeDAO;
 
 import seonghun.yu.db.manager.YUDBManager;
 
 // singleton패턴 아니어도 됨
 public class MemberDAO {
+	private static int getNoticeCount(String id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = YUDBManager.hello("DBServer");
+			String sql = "select count(*) from bpbascp_notice where bn_writer = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			return rs.getInt("count(*)");
+		} catch (Exception e) {
+			return 0;
+		}finally {
+			YUDBManager.world(con, pstmt, rs);
+		}
+	}
+	
 	public static void join(HttpServletRequest req) {
 		// 유효성 검사를 해서 오지만, 파일용량은 검사 못 했음
 		// 10MB 넘는 사진파일을 올리면 -> 실패할텐데 -> DB작업하지말자
@@ -164,7 +183,12 @@ public class MemberDAO {
 			Member m = (Member) req.getSession().getAttribute("loginMember");
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, m.getId());
-			if (pstmt.executeUpdate() == 1) {
+			
+			int noticeCount = getNoticeCount(m.getId()); // 미리 세어서 담아두자
+			if (pstmt.executeUpdate() == 1) { // executeUpdate 호출하는 동시에 포렌키 때문에 글 다 삭제 됨
+				int allNoticeCount = NoticeDAO.getNoticeDAO().getAllNoticeCount();
+				NoticeDAO.getNoticeDAO().setAllNoticeCount(allNoticeCount - noticeCount);
+				
 				req.setAttribute("result", "탈퇴 성공");
 				// 파일업로드 : tomcat + cos.jar
 				// 파일삭제 : 순수 Java로 File 객체 사용
@@ -175,7 +199,7 @@ public class MemberDAO {
 				String file = URLDecoder.decode(m.getPhoto(), "euc-kr");
 				File f = new File(folder + "/" + file);
 				f.delete();
-				// 프사 삭제 ★
+				// ↑ 프사 삭제과정 ★
 			} else {
 				req.setAttribute("result", "이미 탈퇴된 계정입니다");
 			}

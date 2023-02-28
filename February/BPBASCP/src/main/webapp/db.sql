@@ -16,7 +16,7 @@ create table bpbascp_member(
 	bm_photo varchar2(100 char) not null	-- 파일 얘기
 );
 
-create table bpbascp_notice (
+create table bpbascp_notice(
 	bn_no number(3) primary key,			-- 글 번호
 	bn_writer varchar2(10 char) not null,	-- 글쓴이 id
 	bn_title varchar2(50 char) not null,	-- 글 제목
@@ -27,6 +27,24 @@ create table bpbascp_notice (
 		references bpbascp_member(bm_id)
 		on delete cascade
 );
+
+-- 탈퇴 -> 글 -> 댓글 (날아가는 순), 이라서 원래는! bnr_writer는 on delete cascade 안 줘도 삭제 돼야 하는데 해보니 안 된다 함
+-- OracleDB XE(lite버전)이라서 그런건지... or 컴 사양이 문제인지
+create table bpbascp_notice_reply(
+	bnr_no number(4) primary key,			-- 댓글 번호
+	bnr_bn_no number(3) not null,			-- 소속 글 번호
+	bnr_writer varchar2(10 char) not null,	-- 댓글 쓴 사람 id
+	bnr_txt varchar2(300 char) not null,	-- 댓글 내용
+	bnr_date date not null,					-- 쓴 날짜
+	constraint notice_reply
+	foreign key(bnr_bn_no)
+	references bpbascp_notice(bn_no) on delete cascade,
+	constraint notice_reply_writer
+	foreign key(bnr_writer)
+	references bpbascp_member(bm_id)
+);
+
+create sequence bpbascp_notice_reply_seq;
 
 select * from bpbascp_notice;
 
