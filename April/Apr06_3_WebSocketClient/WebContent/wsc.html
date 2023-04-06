@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://192.168.0.157:9999/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="jQuery.js"></script>
+<script type="text/javascript">
+	$(function() {
+		// 연결하면, 서버쪽으로 connection이라는 제목으로
+		// socket 객체를 보냄 <- 자동으로
+		var socket = io.connect('http://192.168.0.125:9999');
+		$('input').keyup(function(e) {
+			if (e.keyCode == 13) {
+				var txt = $(this).val();
+				var msg = {
+					who : '권',
+					text : txt
+				};
+				socket.emit('msggg', msg);
+				$(this).val('');
+			}
+		});
+		socket.on('srvMsggg', function(zc) {
+			var h3 = $('<h3></h3>').text(zc.who + ' : ' + zc.text);
+			$('body').append(h3);
+		});
+	});
+</script>
+</head>
+<body>
+	<input>
+	<hr>
+</body>
+</html>
